@@ -55,6 +55,8 @@ jobs:
 
     - name: Build APK
       run: |
+        rm -rf ~/.buildozer/android/platform/android-sdk/build-tools/36.1.0
+        rm -rf ~/.buildozer/android/platform/android-sdk/build-tools/36.1
         export ANDROID_SDK_ROOT=$HOME/.buildozer/android/platform/android-sdk
         export ANDROID_NDK_ROOT=$HOME/.buildozer/android/platform/android-ndk-r25b
         buildozer -v android debug
