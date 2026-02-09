@@ -32,6 +32,7 @@ jobs:
     - name: Install Buildozer
       run: |
         pip3 install --user buildozer
+        pip3 install --user cython
         echo "$HOME/.local/bin" >> $GITHUB_PATH
 
     - name: Display Buildozer version
