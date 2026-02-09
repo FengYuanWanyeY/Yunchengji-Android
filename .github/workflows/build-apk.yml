@@ -38,6 +38,20 @@ jobs:
     - name: Display Buildozer version
       run: buildozer --version
 
+    - name: Install Android SDK Command Line Tools
+      run: |
+        # Download and install Android SDK Command Line Tools
+        wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+        mkdir -p ~/Android/Sdk/cmdline-tools
+        unzip -q commandlinetools-linux-9477386_latest.zip -d ~/Android/Sdk/cmdline-tools/
+        mv ~/Android/Sdk/cmdline-tools/cmdline-tools ~/Android/Sdk/cmdline-tools/latest
+        
+        # Set environment variables
+        export ANDROID_HOME=$HOME/Android/Sdk
+        export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+        echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+        echo "PATH=$PATH" >> $GITHUB_ENV
+
     - name: Accept Android SDK licenses
       run: |
         mkdir -p ~/.android
