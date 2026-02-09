@@ -71,9 +71,14 @@ jobs:
       run: |
         # Set environment variables for auto-accepting licenses
         export ANDROID_HOME=$HOME/Android/Sdk
-        export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+        export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
         export ACCEPT_EULA=Y
         export ANDROID_ACCEPT_LICENSES=Y
+        
+        # Install required Android SDK components
+        sdkmanager "platforms;android-33"
+        sdkmanager "build-tools;33.0.0"
+        sdkmanager "platform-tools"
         
         # Build APK
         buildozer -v android debug
