@@ -87,6 +87,9 @@ jobs:
         echo "android.sdk_path = $ANDROID_HOME" >> ~/.buildozer/default.cfg
         echo "android.ndk_path = $ANDROID_HOME/ndk" >> ~/.buildozer/default.cfg
         
+        # Clean any previous build
+        buildozer android clean || true
+        
         # Build APK
         buildozer -v android debug
       continue-on-error: false
