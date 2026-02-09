@@ -53,8 +53,9 @@ jobs:
         export ANDROID_HOME=$ANDROID_SDK_ROOT
         # Let buildozer initialize SDK first
         buildozer android init debug || true
-        # Then install correct build-tools version
-        $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "build-tools;30.0.3" || true
+        # Install build-tools 36.1 with license acceptance
+        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "build-tools;36.1" || true
         # Now build the APK
         buildozer -v android debug
       continue-on-error: false
