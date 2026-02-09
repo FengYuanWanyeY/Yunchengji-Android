@@ -38,6 +38,11 @@ jobs:
     - name: Display Buildozer version
       run: buildozer --version
 
+    - name: Accept Android SDK licenses
+      run: |
+        mkdir -p ~/.android
+        echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > ~/.android/repositories.cfg
+
     - name: Cache Buildozer global directory
       uses: actions/cache@v4
       with:
@@ -47,7 +52,8 @@ jobs:
           ${{ runner.os }}-buildozer-
 
     - name: Build APK
-      run: buildozer -v android debug
+      run: |
+        yes | buildozer -v android debug
       continue-on-error: false
 
     - name: Upload APK artifact
