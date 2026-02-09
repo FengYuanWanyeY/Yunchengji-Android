@@ -50,6 +50,12 @@ jobs:
         rm -rf ~/.buildozer
         export ANDROID_SDK_ROOT=$HOME/.buildozer/android/platform/android-sdk
         export ANDROID_NDK_ROOT=$HOME/.buildozer/android/platform/android-ndk-r25b
+        export ANDROID_HOME=$ANDROID_SDK_ROOT
+        # Let buildozer initialize SDK first
+        buildozer android init debug || true
+        # Then install correct build-tools version
+        $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "build-tools;30.0.3" || true
+        # Now build the APK
         buildozer -v android debug
       continue-on-error: false
 
