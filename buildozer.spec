@@ -9,7 +9,7 @@ source.dir = .
 
 version = 1.0.0
 
-requirements = python3,kivy,kivymd,requests,openpyxl,pyjnius
+requirements = python3,kivy,requests,openpyxl,pyjnius
 
 presplash.filename = assets/presplash.png
 icon.filename = assets/icon.png
