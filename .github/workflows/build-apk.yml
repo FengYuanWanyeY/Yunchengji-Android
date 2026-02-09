@@ -38,24 +38,18 @@ jobs:
     - name: Display Buildozer version
       run: buildozer --version
 
-    - name: Build APK
-      env:
-        ANDROID_SDK_ROOT: ${{ github.workspace }}/.buildozer/android/platform/android-sdk
-        ANDROID_NDK_ROOT: ${{ github.workspace }}/.buildozer/android/platform/android-ndk-r25b
-        ANDROID_HOME: ${{ github.workspace }}/.buildozer/android/platform/android-sdk
+    - name: Accept Android SDK licenses
       run: |
-        # Download and install cmdline-tools first
-        mkdir -p $ANDROID_HOME/cmdline-tools
-        cd /tmp
-        wget -q https://dl.google.com/android/repository/commandlinetools-linux-94773862_latest.zip || echo "Download failed, will retry"
-        unzip -q commandlinetools-linux-94773862_latest.zip || echo "Unzip failed"
-        mv cmdline-tools $ANDROID_HOME/cmdline-tools/latest || echo "Move failed"
-        # Create license files
-        mkdir -p $ANDROID_HOME/licenses
-        echo "8933bad161af4178b1185d1a37fbf41ea5269cda2" > $ANDROID_HOME/licenses/android-sdk-license
-        echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > $ANDROID_HOME/licenses/android-sdk-preview-license
-        echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > $ANDROID_HOME/licenses/google-android-ndk-license
-        # Build APK directly with buildozer
+        mkdir -p ~/.android
+        echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > ~/.android/repositories.cfg
+
+    - name: Build APK
+      run: |
+        # Set environment variables for auto-accepting licenses
+        export ACCEPT_EULA=Y
+        export ANDROID_ACCEPT_LICENSES=Y
+        
+        # Build APK
         buildozer -v android debug
       continue-on-error: false
 
